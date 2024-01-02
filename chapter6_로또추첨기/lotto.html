@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <title>로또추첨기</title>
+  <style>
+    .ball {
+      display: inline-block;
+      border: 1px solid black;
+      border-radius: 20px;
+      width: 40px;
+      height: 40px;
+      line-height: 40px;
+      font-size: 20px;
+      text-align: center;
+      margin-right: 20px;
+    }
+  </style>
+</head>
+
+<body>
+<div id="result">추첨 결과는? </div>
+<div id="bonus">보너스: </div>
+
+<script>
+  const candidate = Array(45).fill().map((v,i)=>i+1);
+  // 1부터 45까지의 배열 선언 및 초기화
+  // fill 사용 이유는 map() 메서드를 사용하기 위해 초기화를 진행 시켜준 것
+  const shuffle = [];
+  // while (candidate.length > 0){
+  //   const random = Math.floor(Math.random * candidate.length);
+  //   const spliceArray = candidate.splice(random,1);
+  //   const value = spliceArray
+  //   shuffle.push(value);
+  // }
+
+  for (let i = candidate.length; i > 0; i--){
+    const random = Math.floor(Math.random()*candidate.length)
+    const spliceArray = candidate.splice(random,1);
+    const value = spliceArray[0];
+    shuffle.push(value);
+  }
+
+  console.log(shuffle);`
+
+  const winBalls = shuffle.slice(0,6).sort((a,b)=>a-b);
+  const bonus = shuffle[6];
+
+  console.log(winBalls, bonus);
+
+  const $result = document.querySelector("#result");
+
+  const drawBall = function (i , $parent) {
+    const $ball = document.createElement('div');
+    $ball.className = "ball";
+    $ball.textContent = i;
+    $parent.appendChild($ball)
+  }
+
+  for (let i = 0; i<6; i++){
+  setTimeout(()=>{
+    drawBall(winBalls[i],$result);
+  },1000*(i+1));
+  }
+  const $bonus = document.querySelector("#bonus");
+  setTimeout(()=>{
+    drawBall(bonus, $bonus);
+  },7000);
+
+</script>
+</body>
