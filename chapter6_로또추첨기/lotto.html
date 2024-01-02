@@ -18,27 +18,30 @@
 </head>
 
 <body>
-<div id="result">추첨 결과는? </div>
-<div id="bonus">보너스: </div>
+<div id="result">로또 추첨 결과는?</div>
+<div id="bonus">보너스 번호 : </div>
 
 <script>
   const candidate = Array(45).fill().map((v,i)=>i+1);
   // 1부터 45까지의 배열 선언 및 초기화
   // fill 사용 이유는 map() 메서드를 사용하기 위해 초기화를 진행 시켜준 것
-  const shuffle = [];
-  // while (candidate.length > 0){
-  //   const random = Math.floor(Math.random * candidate.length);
+
+  const shuffle = []; //무작위의 숫자를 저장하기 위한 shuffle 배열
+
+  while (candidate.length > 0) {
+    const random = Math.floor(Math.random() * candidate.length); 
+    const spliceArray = candidate.splice(random, 1); // 뽑은 값은 배열에 들어 있음
+    const value = spliceArray[0]; // 배열에 들어 있는 값을 꺼내어
+    shuffle.push(value); // shuffle 배열에 넣기
+  }
+  // 배열의 순서를 무작위로 섞어주는 알고리즘
+
+  // for (let i = candidate.length; i > 0; i--){
+  //   const random = Math.floor(Math.random()*candidate.length)
   //   const spliceArray = candidate.splice(random,1);
-  //   const value = spliceArray
+  //   const value = spliceArray[0];
   //   shuffle.push(value);
   // }
-
-  for (let i = candidate.length; i > 0; i--){
-    const random = Math.floor(Math.random()*candidate.length)
-    const spliceArray = candidate.splice(random,1);
-    const value = spliceArray[0];
-    shuffle.push(value);
-  }
 
   console.log(shuffle);
 
@@ -47,7 +50,6 @@
 
   console.log(winBalls, bonus);
 
-  const $result = document.querySelector("#result");
 
   const drawBall = function (i , $parent) {
     const $ball = document.createElement('div');
@@ -56,11 +58,14 @@
     $parent.appendChild($ball)
   }
 
+  const $result = document.querySelector("#result");
+
   for (let i = 0; i<6; i++){
   setTimeout(()=>{
     drawBall(winBalls[i],$result);
   },1000*(i+1));
   }
+  
   const $bonus = document.querySelector("#bonus");
   setTimeout(()=>{
     drawBall(bonus, $bonus);
