@@ -83,6 +83,7 @@
     const myScore = scoreTable[myChoice];
     const computerScore = scoreTable[computerChoice];
     const diff = myScore - computerScore;
+
     let message;
     if (diff === 2 || diff === -1) {
       score += 1;
@@ -97,10 +98,9 @@
       message = "무승부";
       console.log('무승부');
     }
-    if (score == 3){
-      winner = "유저";
-    } else if (comScore == 3) {
-      Winner = "컴퓨터"
+
+    if (score == 3 || comScore == 3){
+      winner = score == 3 ? "유저" : "컴퓨터";
     }
 
     if (winner){
